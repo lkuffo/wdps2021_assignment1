@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
     f = open(OUTPUT_FILE, 'w')
 
-    for html_prase, page_id in get_html_warc(INPUT):
+    for html_prase, page_id in get_html_warc(INPUT)[0:92]:
         try: 
             raw_text = text_extract(html_prase)
             #print (raw_text)
