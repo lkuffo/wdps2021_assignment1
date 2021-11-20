@@ -33,19 +33,27 @@ def get_popularity(wikiID):
 def get_connections(wikiID1, wikiID2):
     return ""
 
-def disambiguate_entities(raw_text, entities):
+def disambiguate_entities(raw_text, entities, method = "naive"):
     found_entities = []
-    for label, wikiID in entities:
-        disambiguate_rankings = {}
-        if label not in disambiguate_rankings:
-            disambiguate_rankings[label] = {
-                "popularity": 0,
-                "relations": 0
-            }
-        if len(found_entities) > 0:
-            for label_tmp, wikiID_tmp in found_entities:
-                local_connections = get_connections(wikiID, wikiID_tmp)
-                n_local_connections = len(local_connections)
-                disambiguate_rankings[label]["relations"] += n_local_connections
-        entity_popularity = get_popularity(wikiID)
-        disambiguate_rankings[label] = entity_popularity
+    if method == "naive":
+        for original_label, entity in entities.items():
+            for wikiID, label, score in entities:
+                found_entities.append([wikiID, label])
+                break
+    else:
+        for original_label, entity in entities.items():
+            for wikiID, label, score in entities:
+                disambiguate_rankings = {}
+                if label not in disambiguate_rankings:
+                    disambiguate_rankings[label] = {
+                        "popularity": 0,
+                        "relations": 0
+                    }
+                if len(found_entities) > 0:
+                    for label_tmp, wikiID_tmp in found_entities:
+                        local_connections = get_connections(wikiID, wikiID_tmp)
+                        n_local_connections = len(local_connections)
+                        disambiguate_rankings[label]["relations"] += n_local_connections
+                entity_popularity = get_popularity(wikiID)
+                disambiguate_rankings[label] = entity_popularity
+    return found_entities

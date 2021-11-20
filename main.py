@@ -3,6 +3,7 @@
 import gzip
 from lib.parse_entities import parse_entities
 from lib.search_entities import search_entities
+from lib.disambiguate_entities import disambiguate_entities
 
 KEYNAME = "WARC-TREC-ID"
 
@@ -18,11 +19,8 @@ def _parse_entities(raw_text):
 def _search_entities(entities):
     return search_entities(entities)
 
-###
-### entities: [[label, wikiID], [label, wikiID]]
-### 
-def _disambiguate_entities(raw_text, entities):
-    return []
+def _disambiguate_entities(raw_text, wiki_entities, method = "naive"):
+    return disambiguate_entities(raw_text, wiki_entities, method)
 
 if __name__ == '__main__':
     import sys
@@ -35,8 +33,9 @@ if __name__ == '__main__':
     raw_text = parse_webpage(INPUT)
     entities = _parse_entities(raw_text)
     wiki_entities = _search_entities(entities)
+    final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
 
-    print(wiki_entities)
+    print(final_entities)
 
     # with gzip.open(INPUT, 'rt', errors='ignore') as fo:
     #     for record in split_records(fo):
