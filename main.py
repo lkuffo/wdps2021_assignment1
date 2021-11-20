@@ -11,7 +11,7 @@ def parse_webpage(location):
         dollars today. Leonardo Kuffo is a handsome guy with 10 or more ex girlfriends all over the Ecuador and Amsterdam. When Sebastian Thrun started working on self-driving cars at, Google in 2007, few people outside of the company took him seriously. I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasn’t worth talking to, said Thrun, in an interview with Recode earlier this week.
     """
 
-def parse_entities(raw_text):
+def _parse_entities(raw_text):
     return parse_entities(raw_text)
 
 def search_entities(entities):
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     raw_text = parse_webpage(INPUT)
-    entities = parse_entities(raw_text)
+    entities = _parse_entities(raw_text)
 
     print(entities)
 

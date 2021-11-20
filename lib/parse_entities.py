@@ -7,7 +7,7 @@ This is a NER Candidate used in wdps assignment1 Entity linker
 Spacy NER
 """
 import spacy
-#spacy.cli.download("en")
+spacy.cli.download("en")
 
 """
 PERSON:      People, including fictional.
