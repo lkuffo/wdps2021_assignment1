@@ -17,7 +17,10 @@ def _parse_entities(raw_text):
 def search_entities(entities):
     return []
 
-def disambiguate_entities(raw_text, entities):
+###
+### entities: [[label, wikiID], [label, wikiID]]
+### 
+def _disambiguate_entities(raw_text, entities):
     return []
 
 if __name__ == '__main__':

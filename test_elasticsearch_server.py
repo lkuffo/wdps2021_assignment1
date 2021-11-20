@@ -4,10 +4,6 @@ from elasticsearch import Elasticsearch
 import trident
 import json
 
-print("Loading db...")
-db = trident.Db("assets/wikidata-20200203-truthy-uri-tridentdb")
-print("Done")
-
 def search(query):
     e = Elasticsearch(["localhost:9200"])
     p = { "query" : { "query_string" : { "query" : query }}}
@@ -20,15 +16,6 @@ def search(query):
             id_labels.setdefault(id, set()).add(label)
     return id_labels
 
-def searchTrident(term):
-    term_id = db.lookup_id(term)
-    print(db.po(term_id))
-
-    results = db.sparql(term_id)
-    json_results = json.loads(results)
-    return json_results
-
-
 if __name__ == '__main__':
     import sys
     try:
@@ -36,7 +23,5 @@ if __name__ == '__main__':
     except Exception as e:
         QUERY = 'Vrije Universiteit Amsterdam'
 
-    for entity, labels in search(QUERY).items()[:1]:
+    for entity, labels in search(QUERY).items():
         print(entity, labels)
-        result = searchTrident(entity)
-        print (result)
