@@ -35,11 +35,12 @@ if __name__ == '__main__':
 
     f = open(OUTPUT_FILE, 'w')
     raw_text = _parse_warc(INPUT)
+    print (raw_text)
     entities = _parse_entities(raw_text)
     wiki_entities = _search_entities(entities)
     print (wiki_entities)
     final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
     print(final_entities)
-
+    exit()
     write_result(f, final_entities)
     f.close()
