@@ -59,6 +59,4 @@ def spacy_dictionary(entities_list):
 
 def parse_entities(raw_text):
     entities_list = spacy_ner_from_text(raw_text)
-    print(spacy_dictionary(entities_list).items())
-    for items in spacy_dictionary(entities_list).items():
-        print(items)
+    return entities_list
