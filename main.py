@@ -4,7 +4,7 @@ import gzip
 from lib.parse_entities import parse_entities
 from lib.search_entities import search_entities
 from lib.disambiguate_entities import disambiguate_entities
-from lib.parse_warc import parce_warc
+from lib.parse_warc import parse_warc
 
 OUTPUT_FILE = "sample_predictions.tsv"
 
