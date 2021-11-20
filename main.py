@@ -33,8 +33,10 @@ if __name__ == '__main__':
         sys.exit(0)
 
     f = open(OUTPUT_FILE, 'w')
-
-    for html_prase, page_id in get_html_warc(INPUT)[0:92]:
+    i = 0
+    for html_prase, page_id in get_html_warc(INPUT):
+        if i == 92:
+            break
         try: 
             raw_text = text_extract(html_prase)
             #print (raw_text)
@@ -48,4 +50,5 @@ if __name__ == '__main__':
             write_result(f, final_entities, page_id)
         except Exception as e:
             print (e)
+        i += 1
     f.close()
