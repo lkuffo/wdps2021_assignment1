@@ -20,9 +20,9 @@ def _search_entities(entities):
 def _disambiguate_entities(raw_text, wiki_entities, method = "naive"):
     return disambiguate_entities(raw_text, wiki_entities, method)
 
-def write_result(file_pointer, entities):
+def write_result(file_pointer, entities, page_id):
     for wikiID, label in entities:
-        file_pointer.write('\t' + wikiID + '\t' + label + '\n')
+        file_pointer.write(page_id + '\t' + wikiID + '\t' + label + '\n')
 
 if __name__ == '__main__':
     import sys
@@ -35,7 +35,6 @@ if __name__ == '__main__':
     f = open(OUTPUT_FILE, 'w')
 
     for html_prase, page_id in get_html_warc(INPUT):
-        print(page_id)
         try: 
             raw_text = text_extract(html_prase)
             #print (raw_text)
@@ -46,7 +45,7 @@ if __name__ == '__main__':
             #print (wiki_entities)
             final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
             #print(final_entities)
-            write_result(f, final_entities)
+            write_result(f, final_entities, page_id)
         except Exception as e:
             print (e)
     f.close()
