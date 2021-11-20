@@ -22,8 +22,7 @@ def _disambiguate_entities(raw_text, wiki_entities, method = "naive"):
 
 def write_result(file_pointer, entities):
     for wikiID, label in entities:
-        f.write('\t' + wikiID + '\t' + label + '\n')
-    f.close()
+        file_pointer.write('\t' + wikiID + '\t' + label + '\n')
 
 if __name__ == '__main__':
     import sys
