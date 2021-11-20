@@ -34,13 +34,12 @@ if __name__ == '__main__':
         sys.exit(0)
 
     f = open(OUTPUT_FILE, 'w')
-    for webpage in webpages:
-        raw_text = _parse_webpage(INPUT)
-        entities = _parse_entities(raw_text)
-        wiki_entities = _search_entities(entities)
-        print (wiki_entities)
-        final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
-        print(final_entities)
+    raw_text = _parse_webpage(INPUT)
+    entities = _parse_entities(raw_text)
+    wiki_entities = _search_entities(entities)
+    print (wiki_entities)
+    final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
+    print(final_entities)
 
-        write_result(f, final_entities)
+    write_result(f, final_entities)
     f.close()
