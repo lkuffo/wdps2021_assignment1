@@ -25,6 +25,7 @@ def search_entities(query):
         wikidata_entities[label] = []
         if response and response['hits'] and response['hits']['hits']:
             for hit in response['hits']['hits']:
+                print (hit['_source'])
                 label_es = hit['_source']['schema_name']
                 id_es = hit['_id']
                 wikidata_entities[label].append([id_es, label_es])
