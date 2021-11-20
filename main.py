@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     for i, html_prase in enumerate(get_html_warc(INPUT)):
         raw_text = text_extract(html_prase)
-        print (raw_text)
+        #print (raw_text)
         entities = _parse_entities(raw_text)
         wiki_entities = _search_entities(entities)
         #print (wiki_entities)
