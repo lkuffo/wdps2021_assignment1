@@ -39,6 +39,8 @@ def get_html_warc(warcfile):
     else:
         f = gzip.open(warcfile,'rb')
     for record in ArchiveIterator(f):
+        print(record.rec_headers)
+        print(record.http_headers)
         page_id = record.rec_headers.get_header('WARC-Record-ID')
         if record.rec_type == 'warcinfo':
             warcinfo=record.raw_stream.read()
