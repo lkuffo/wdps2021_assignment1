@@ -54,8 +54,8 @@ def get_html_warc(warcfile):
                         charset=strlist[1]
                 else: #no charset
                     charset='utf-8'
-                payload=record.content_stream().read().decode(encoding=charset,errors= 'ignore')
-                return payload
+                payload = record.content_stream().read().decode(encoding=charset,errors= 'ignore')
+                yield payload
             elif content_type and content_type[:19] == 'application/rss+xml':
                 #process xml type
                 xml=record.content_stream().read()
@@ -68,7 +68,7 @@ def get_html_warc(warcfile):
         #get wet file content         
         elif record.rec_type == 'conversion':
             payload=record.content_stream().read().decode(encoding=charset,errors= 'ignore')
-            return payload
+            yield payload
     if not isurl(warcfile):
         f.close()
 

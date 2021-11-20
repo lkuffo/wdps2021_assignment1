@@ -4,7 +4,7 @@ import gzip
 from lib.parse_entities import parse_entities
 from lib.search_entities import search_entities
 from lib.disambiguate_entities import disambiguate_entities
-from lib.parse_warc import parse_warc
+from lib.parse_warc import get_html_warc, text_extract
 
 OUTPUT_FILE = "sample_predictions.tsv"
 
@@ -21,8 +21,8 @@ def _disambiguate_entities(raw_text, wiki_entities, method = "naive"):
     return disambiguate_entities(raw_text, wiki_entities, method)
 
 def write_result(file_pointer, entities):
-    for website, wikiID, label in entities:
-        f.write(website + '\t' + wikiID + '\t' + label + '\n')
+    for wikiID, label in entities:
+        f.write('\t' + wikiID + '\t' + label + '\n')
     f.close()
 
 if __name__ == '__main__':
@@ -34,13 +34,14 @@ if __name__ == '__main__':
         sys.exit(0)
 
     f = open(OUTPUT_FILE, 'w')
-    raw_text = _parse_warc(INPUT)
-    print (raw_text)
-    entities = _parse_entities(raw_text)
-    wiki_entities = _search_entities(entities)
-    print (wiki_entities)
-    final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
-    print(final_entities)
-    exit()
-    write_result(f, final_entities)
+
+    for i, html_prase in enumerate(get_html_warc(INPUT)):
+        raw_text = text_extract(html_prase)
+        print (raw_text)
+        entities = _parse_entities(raw_text)
+        wiki_entities = _search_entities(entities)
+        #print (wiki_entities)
+        final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
+        #print(final_entities)
+        write_result(f, final_entities)
     f.close()
