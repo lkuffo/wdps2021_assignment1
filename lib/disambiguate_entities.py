@@ -37,12 +37,12 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
     found_entities = []
     if method == "naive":
         for original_label, entity in entities.items():
-            for wikiID, label, score in entities:
+            for wikiID, label, score in entity:
                 found_entities.append([wikiID, label])
                 break
     else:
         for original_label, entity in entities.items():
-            for wikiID, label, score in entities:
+            for wikiID, label, score in entity:
                 disambiguate_rankings = {}
                 if label not in disambiguate_rankings:
                     disambiguate_rankings[label] = {
