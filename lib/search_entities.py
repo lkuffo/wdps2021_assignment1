@@ -25,10 +25,10 @@ def search_entities(query):
         wikidata_entities[label] = []
         if response and response['hits'] and response['hits']['hits']:
             for hit in response['hits']['hits']:
-                print (hit)
+                score_es = hit['_score']
                 label_es = hit['_source']['schema_name']
                 id_es = hit['_id']
-                wikidata_entities[label].append([id_es, label_es])
+                wikidata_entities[label].append([id_es, label_es, score_es])
                 #id_labels.setdefault(id_es, set()).add(label_es)
         #wikidata_entities.append(id_labels)
     return wikidata_entities
