@@ -42,3 +42,10 @@ def disambiguate_entities(raw_text, entities):
                 "popularity": 0,
                 "relations": 0
             }
+        if len(found_entities) > 0:
+            for label_tmp, wikiID_tmp in found_entities:
+                local_connections = get_connections(wikiID, wikiID_tmp)
+                n_local_connections = len(local_connections)
+                disambiguate_rankings[label]["relations"] += n_local_connections
+        entity_popularity = get_popularity(wikiID)
+        disambiguate_rankings[label] = entity_popularity

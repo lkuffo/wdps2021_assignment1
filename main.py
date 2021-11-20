@@ -2,6 +2,7 @@
 # -*- coding: iso-8859-15 -*-
 import gzip
 from lib.parse_entities import parse_entities
+from lib.search_entities import search_entities
 
 KEYNAME = "WARC-TREC-ID"
 
@@ -14,8 +15,8 @@ def parse_webpage(location):
 def _parse_entities(raw_text):
     return parse_entities(raw_text)
 
-def search_entities(entities):
-    return []
+def _search_entities(entities):
+    return search_entities(entities)
 
 ###
 ### entities: [[label, wikiID], [label, wikiID]]
@@ -33,8 +34,9 @@ if __name__ == '__main__':
 
     raw_text = parse_webpage(INPUT)
     entities = _parse_entities(raw_text)
+    wiki_entities = _search_entities(entities)
 
-    print(entities)
+    print(wiki_entities)
 
     # with gzip.open(INPUT, 'rt', errors='ignore') as fo:
     #     for record in split_records(fo):
