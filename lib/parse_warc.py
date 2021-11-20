@@ -39,6 +39,7 @@ def get_html_warc(warcfile):
     else:
         f = gzip.open(warcfile,'rb')
     for record in ArchiveIterator(f):
+        page_id = record.rec_headers.get_header('WARC-Record-ID')
         if record.rec_type == 'warcinfo':
             warcinfo=record.raw_stream.read()
         #get warc file content\
@@ -55,7 +56,7 @@ def get_html_warc(warcfile):
                 else: #no charset
                     charset='utf-8'
                 payload = record.content_stream().read().decode(encoding=charset,errors= 'ignore')
-                yield payload
+                yield [payload, page_id]
             elif content_type and content_type[:19] == 'application/rss+xml':
                 #process xml type
                 xml=record.content_stream().read()
@@ -68,7 +69,7 @@ def get_html_warc(warcfile):
         #get wet file content         
         elif record.rec_type == 'conversion':
             payload=record.content_stream().read().decode(encoding=charset,errors= 'ignore')
-            yield payload
+            yield [payload, page_id]
     if not isurl(warcfile):
         f.close()
 
