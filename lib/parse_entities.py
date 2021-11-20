@@ -43,7 +43,7 @@ def spacy_ner_from_file(file_location):
     return entities_list
 
 def spacy_ner_from_text(raw_text):
-    if (len(raw_text) < 1 or raw_text == None):
+    if (raw_text == None or len(raw_text) < 1):
         return None
     doc = nlp(raw_text)
     # Noun_phrases = [chunk.text for chunk in doc.noun_chunks]
