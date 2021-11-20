@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: iso-8859-15 -*-
 """
 @author Group 17-Tong Wu(t3.wu@student.vu.nl 2734542)
 @Create 11-14-2021 16:00 PM

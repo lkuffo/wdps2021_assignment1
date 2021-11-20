@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: iso-8859-15 -*-
 import gzip
 from lib.parse_entities import parse_entities
 
