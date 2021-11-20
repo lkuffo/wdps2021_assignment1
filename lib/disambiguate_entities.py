@@ -38,7 +38,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
     if method == "naive":
         for original_label, entity in entities.items():
             for wikiID, label, score in entity:
-                found_entities.append([wikiID, label])
+                found_entities.append([wikiID, original_label])
                 break
     else:
         for original_label, entity in entities.items():
