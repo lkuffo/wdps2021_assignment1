@@ -4,15 +4,12 @@ import gzip
 from lib.parse_entities import parse_entities
 from lib.search_entities import search_entities
 from lib.disambiguate_entities import disambiguate_entities
+from lib.parse_warc import parce_warc
 
-KEYNAME = "WARC-TREC-ID"
 OUTPUT_FILE = "sample_predictions.tsv"
 
-def _parse_webpage(webpage):
-    return """
-        The fate of Lehman Brothers, the beleaguered investment bank, hung in the balance on Sunday as Federal Reserve officials and the leaders of major financial institutions continued to gather in emergency meetings trying to complete a plan to rescue the stricken bank.  Several possible plans emerged from the talks, held at the Federal Reserve Bank of New York and led by Timothy R. Geithner, the president of the New York Fed,and Treasury Secretary Henry M. Paulson Jr. I earned 10 million
-        dollars today. Leonardo Kuffo is a handsome guy with 10 or more ex girlfriends all over the Ecuador and Amsterdam. When Sebastian Thrun started working on self-driving cars at, Google in 2007, few people outside of the company took him seriously. I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasn’t worth talking to, said Thrun, in an interview with Recode earlier this week.
-    """
+def _parse_warc(_input):
+    return parse_warc(_input)
 
 def _parse_entities(raw_text):
     return parse_entities(raw_text)
