@@ -28,10 +28,39 @@ def sparqlQuery(query, format="application/json"):
 
 
 def get_popularity(wikiID):
-    return ""
+    # Get number of triplets of entity
+    entityId = wikiID.replace('>', '').split('/')[-1]
+    query = """
+        PREFIX wd: <http://www.wikidata.org/entity/>  
+        SELECT (COUNT(*) as ?Triples) 
+        WHERE {
+            VALUES ?s {  wd:""" + entityId """ +  }
+            ?s ?p ?o
+        }
+    """
+    try:
+        results = sparqlQuery(query)["results"]["bindings"][0]["Triples"]["value"]
+    except Exception as e:
+        print (e)
+        return 0
 
 def get_connections(wikiID1, wikiID2):
-    return ""
+    entityId1 = wikiID1.replace('>', '').split('/')[-1]
+    entityId2 = wikiID2.replace('>', '').split('/')[-1]
+    query = """
+        PREFIX wd: <http://www.wikidata.org/entity/>  
+        SELECT (COUNT(*) as ?Triples) 
+        WHERE {
+            VALUES ?s {  wd:""" + entityId1 + """ }
+            VALUES ?o {  wd:""" + entityId2 + """ }
+            ?s ?p ?o
+        }
+    """
+    try:
+        results = sparqlQuery(query)["results"]["bindings"][0]["Triples"]["value"]
+    except Exception as e:
+        print (e)
+        return 0
 
 def disambiguate_entities(raw_text, entities, method = "naive"):
     found_entities = []
@@ -56,4 +85,5 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                         disambiguate_rankings[label]["relations"] += n_local_connections
                 entity_popularity = get_popularity(wikiID)
                 disambiguate_rankings[label] = entity_popularity
+            #sort_ranking = dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"]))
     return found_entities

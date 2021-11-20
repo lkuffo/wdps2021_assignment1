@@ -6,8 +6,9 @@ from lib.search_entities import search_entities
 from lib.disambiguate_entities import disambiguate_entities
 
 KEYNAME = "WARC-TREC-ID"
+OUTPUT_FILE = "sample_predictions.tsv"
 
-def parse_webpage(location):
+def _parse_webpage(webpage):
     return """
         The fate of Lehman Brothers, the beleaguered investment bank, hung in the balance on Sunday as Federal Reserve officials and the leaders of major financial institutions continued to gather in emergency meetings trying to complete a plan to rescue the stricken bank.  Several possible plans emerged from the talks, held at the Federal Reserve Bank of New York and led by Timothy R. Geithner, the president of the New York Fed,and Treasury Secretary Henry M. Paulson Jr. I earned 10 million
         dollars today. Leonardo Kuffo is a handsome guy with 10 or more ex girlfriends all over the Ecuador and Amsterdam. When Sebastian Thrun started working on self-driving cars at, Google in 2007, few people outside of the company took him seriously. I can tell you very senior CEOs of major American car companies would shake my hand and turn away because I wasn’t worth talking to, said Thrun, in an interview with Recode earlier this week.
@@ -22,6 +23,11 @@ def _search_entities(entities):
 def _disambiguate_entities(raw_text, wiki_entities, method = "naive"):
     return disambiguate_entities(raw_text, wiki_entities, method)
 
+def write_result(file_pointer, entities):
+    for website, wikiID, label in entities:
+        f.write(website + '\t' + wikiID + '\t' + label + '\n')
+    f.close()
+
 if __name__ == '__main__':
     import sys
     try:
@@ -30,14 +36,13 @@ if __name__ == '__main__':
         print('Usage: python starter-code.py INPUT')
         sys.exit(0)
 
-    raw_text = parse_webpage(INPUT)
-    entities = _parse_entities(raw_text)
-    wiki_entities = _search_entities(entities)
-    final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
+    f = open(OUTPUT_FILE, 'w')
+    for webpage in webpages:
+        raw_text = _parse_webpage(INPUT)
+        entities = _parse_entities(raw_text)
+        wiki_entities = _search_entities(entities)
+        final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
+        print(final_entities)
 
-    print(final_entities)
-
-    # with gzip.open(INPUT, 'rt', errors='ignore') as fo:
-    #     for record in split_records(fo):
-    #         for key, label, wikidata_id in find_labels(record):
-    #             print(key + '\t' + label + '\t' + wikidata_id)
+        write_result(f, final_entities)
+    f.close()
