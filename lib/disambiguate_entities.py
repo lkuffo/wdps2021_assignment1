@@ -34,7 +34,7 @@ def get_popularity(wikiID):
         PREFIX wd: <http://www.wikidata.org/entity/>  
         SELECT (COUNT(*) as ?Triples) 
         WHERE {
-            VALUES ?s {  wd:""" + entityId """ +  }
+            VALUES ?s {  wd:""" + entityId + """ }
             ?s ?p ?o
         }
     """
