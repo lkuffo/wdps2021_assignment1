@@ -65,7 +65,7 @@ SELECT ?verb1 ?verb2 WHERE {
 }
 """
 
-#Get number of triplets of entity
+# Get number of triplets of entity
 query = """
 PREFIX wd: <http://www.wikidata.org/entity/>  
 SELECT (COUNT(*) as ?Triples) 
@@ -77,16 +77,16 @@ WHERE
 """
 
 # Get number of triplets between two entities
-query = """
-PREFIX wd: <http://www.wikidata.org/entity/>  
-SELECT (COUNT(*) as ?Triples) 
-WHERE 
-{
-  VALUES ?s {  wd:Q2610973  }
-  VALUES ?o {  wd:Q1065414  }
-  ?s ?p ?o
-}
-"""
+# query = """
+# PREFIX wd: <http://www.wikidata.org/entity/>  
+# SELECT (COUNT(*) as ?Triples) 
+# WHERE 
+# {
+#   VALUES ?s {  wd:Q2610973  }
+#   VALUES ?o {  wd:Q1065414  }
+#   ?s ?p ?o
+# }
+# """
 
 # RESULTS LENGTH = MORE POPULAR = CORRECT RESULTS
 # 
