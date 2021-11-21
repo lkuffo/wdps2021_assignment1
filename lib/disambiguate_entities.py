@@ -40,7 +40,6 @@ def get_popularity(wikiID):
     """
     try:
         results = int(sparqlQuery(query)["results"]["bindings"][0]["Triples"]["value"])
-        print(results)
         return results
     except Exception as e:
         print (e)
@@ -103,7 +102,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                         disambiguate_rankings[label]["relations"] += n_local_connections
             
                 entity_popularity = get_popularity(wikiID)
-                disambiguate_rankings[label] = entity_popularity
+                disambiguate_rankings[label]["popularity"] = entity_popularity
             if (method == "popularity"):
                 sort_ranking = dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"])).values()
                 print(sort_ranking)
