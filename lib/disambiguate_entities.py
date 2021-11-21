@@ -104,7 +104,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                 entity_popularity = get_popularity(wikiID)
                 disambiguate_rankings[label]["popularity"] = entity_popularity
             if (method == "popularity"):
-                sort_ranking = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"])).values())
+                sort_ranking = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"]), reverse=True).values())
                 print(sort_ranking)
                 best_ranked_entity = sort_ranking[0]["info"]
                 print(best_ranked_entity)
