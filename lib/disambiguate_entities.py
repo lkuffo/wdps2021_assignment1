@@ -1,4 +1,4 @@
-import urllib, json, requests
+import urllib, json, requests, json
 
 """
 This file demonstrates how to make a simple SPARQL query against the public
@@ -39,7 +39,7 @@ def get_popularity(wikiID):
         }
     """
     try:
-        results = int(sparqlQuery(query)["results"]["bindings"][0]["Triples"]["value"])
+        results = int(json.loads(sparqlQuery(query))["results"]["bindings"][0]["Triples"]["value"])
         return results
     except Exception as e:
         print (e)
@@ -58,7 +58,7 @@ def get_connections(wikiID1, wikiID2):
         }
     """
     try:
-        results = int(sparqlQuery(query)["results"]["bindings"][0]["Triples"]["value"])
+        results = int(json.loads(sparqlQuery(query))["results"]["bindings"][0]["Triples"]["value"])
         return results
     except Exception as e:
         print (e)
