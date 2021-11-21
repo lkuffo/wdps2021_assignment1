@@ -40,6 +40,7 @@ def get_popularity(wikiID):
     """
     try:
         results = sparqlQuery(query)["results"]["bindings"][0]["Triples"]["value"]
+        return results
     except Exception as e:
         print (e)
         return 0
@@ -58,6 +59,7 @@ def get_connections(wikiID1, wikiID2):
     """
     try:
         results = sparqlQuery(query)["results"]["bindings"][0]["Triples"]["value"]
+        return results
     except Exception as e:
         print (e)
         return 0
