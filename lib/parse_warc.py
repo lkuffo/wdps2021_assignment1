@@ -12,7 +12,7 @@ from selectolax.parser import HTMLParser
 #from lxml.html import fromstring
 from pyquery import PyQuery
 #from polyglot.text import Text,Detector
-from dragnet import extract_content
+#from dragnet import extract_content
 
 def isurl(url):
     regex = re.compile(
@@ -123,6 +123,13 @@ def text_extract(html_prase):
             tag.decompose()
         for tag in body.select('style'):
             tag.decompose()
+
+        VALID_TAGS = ['div', 'p']
+        # Select only relevant tags:
+        for tag in soup.findAll('p'):
+            if tag.name not in VALID_TAGS:
+                tag.replaceWith(tag.renderContents())
+
         text = body.get_text(separator='')
     return text
 
