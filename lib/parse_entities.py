@@ -55,6 +55,7 @@ def spacy_dictionary(entities_list):
     dic = {}
     i = 0
     for entity in entities_list:
+        print(entity.vector)
         i += 1
         dic['Entity {}'.format(i)] = (entity.text, entity.label_)
     return dic
