@@ -16,7 +16,7 @@ def remove_urls(text):
     return text
 
 def remove_special_characters(text):
-    text = text.replace("\t", " ").replace("\n", ". ").replace("\r", ". ")
+    text = text.replace("\t", " ").replace("\n", " ").replace("\r", " ")
     text = re.sub(' +', ' ', text)
     return text
 
