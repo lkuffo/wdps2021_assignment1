@@ -131,6 +131,7 @@ def text_extract(html_prase):
                 tag.replaceWith(tag.renderContents())
 
         text = body.get_text(separator='')
+    print (text)
     return text
 
 def save_to_file(file_name,contents):
