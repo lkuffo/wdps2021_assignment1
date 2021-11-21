@@ -23,7 +23,7 @@ def sparqlQuery(query, format="application/json"):
         "save": "display",
         "fname": ""
     }))
-    print (resp.content.decode("utf-8"))
+    #print (resp.content.decode("utf-8"))
     return json.loads(resp.content.decode("utf-8"))
 
 
@@ -98,8 +98,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
 
                     for wikiID_tmp, label_tmp, es_tmp_label in found_entities:
                         local_connections = get_connections(wikiID, wikiID_tmp)
-                        n_local_connections = len(local_connections)
-                        disambiguate_rankings[label]["relations"] += n_local_connections
+                        disambiguate_rankings[label]["relations"] += local_connections
             
                 entity_popularity = get_popularity(wikiID)
                 disambiguate_rankings[label]["popularity"] = entity_popularity
