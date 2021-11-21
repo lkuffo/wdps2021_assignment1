@@ -27,7 +27,8 @@ def search_entities(query):
                 "query_string": {
                     "query": label
                 }
-            }
+            },
+            "size": 20
         }
         response = e.search(index="wikidata_en", body=json.dumps(p))
         wikidata_entities[entityId] = []
@@ -44,6 +45,9 @@ def search_entities(query):
 
                 cosine_similarity = 1 - spatial.distance.cosine(vector_es, label_vector)
                 print(label, label_es, cosine_similarity)
+
+                if cosine_similarity < 0.40:
+                    continue
 
                 wikidata_entities[entityId].append([id_es, label_es, score_es, label])
     return wikidata_entities
