@@ -79,7 +79,12 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                         "relations": 0
                     }
                 if len(found_entities) > 0:
-                    for label_tmp, wikiID_tmp in found_entities:
+                    for wikiID_tmp, label_tmp in found_entities:
+                        # Same context assumption
+                        if (wikiID_tmp == wikiID):
+                            found_entities.append([wikiID, original_label])
+                            break
+                    for wikiID_tmp, label_tmp in found_entities:
                         local_connections = get_connections(wikiID, wikiID_tmp)
                         n_local_connections = len(local_connections)
                         disambiguate_rankings[label]["relations"] += n_local_connections

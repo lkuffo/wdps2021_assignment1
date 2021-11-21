@@ -35,7 +35,7 @@ if __name__ == '__main__':
     f = open(OUTPUT_FILE, 'w')
     i = 0
     for html_prase, page_id in get_html_warc(INPUT):
-        if i == 92:
+        if i == 2:
             break
         try: 
             raw_text = text_extract(html_prase)
@@ -43,6 +43,7 @@ if __name__ == '__main__':
             entities = _parse_entities(raw_text)
             if (entities == None or len(entities) < 1):
                 continue
+            print (entities)
             wiki_entities = _search_entities(entities)
             #print (wiki_entities)
             final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
