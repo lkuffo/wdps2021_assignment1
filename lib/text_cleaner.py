@@ -17,6 +17,7 @@ def remove_urls(text):
 
 def remove_special_characters(text):
     text_filtered = []
+    text_splitted = text.split("\n")
     for segment in text_splitted:
         if len(segment < 10):
             continue
