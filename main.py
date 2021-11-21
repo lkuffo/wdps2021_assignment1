@@ -5,6 +5,7 @@ from lib.parse_entities import parse_entities
 from lib.search_entities import search_entities
 from lib.disambiguate_entities import disambiguate_entities
 from lib.parse_warc import get_html_warc, text_extract
+from lib.text_cleaner import clean_text
 
 OUTPUT_FILE = "sample_predictions.tsv"
 
@@ -19,6 +20,9 @@ def _search_entities(entities):
 
 def _disambiguate_entities(raw_text, wiki_entities, method = "naive"):
     return disambiguate_entities(raw_text, wiki_entities, method)
+
+def _clean_text(raw_text):
+    return clean_text(raw_text)
 
 def write_result(file_pointer, entities, page_id):
     for wikiID, label in entities:
@@ -39,6 +43,7 @@ if __name__ == '__main__':
             break
         try: 
             raw_text = text_extract(html_prase)
+            raw_text = clean_text(raw_text)
             #print (raw_text)
             entities = _parse_entities(raw_text)
             if (entities == None or len(entities) < 1):
