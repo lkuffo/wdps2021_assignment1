@@ -67,7 +67,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
     if method == "naive":
         for entityLocalId, entity in entities.items():
             for wikiID, label, score, original_label in entity:
-                found_entities.append([wikiID, original_label])
+                found_entities.append([wikiID, original_label, label])
                 break
     else:
         for entityLocalId, entity in entities.items():
@@ -82,7 +82,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                     for wikiID_tmp, label_tmp in found_entities:
                         # Same context assumption
                         if (wikiID_tmp == wikiID):
-                            found_entities.append([wikiID, original_label])
+                            found_entities.append([wikiID, original_label, label])
                             break
                     for wikiID_tmp, label_tmp in found_entities:
                         local_connections = get_connections(wikiID, wikiID_tmp)

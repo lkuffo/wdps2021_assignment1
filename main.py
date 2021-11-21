@@ -25,7 +25,7 @@ def _clean_text(raw_text):
     return clean_text(raw_text)
 
 def write_result(file_pointer, entities, page_id):
-    for wikiID, label in entities:
+    for wikiID, label, wikiLabel in entities:
         file_pointer.write(page_id + '\t' + wikiID + '\t' + label + '\n')
 
 if __name__ == '__main__':
