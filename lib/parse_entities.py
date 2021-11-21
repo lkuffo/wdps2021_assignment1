@@ -55,10 +55,8 @@ def spacy_dictionary(entities_list):
     dic = {}
     i = 0
     for entity in entities_list:
-        print(entity.vector)
-        print(entity)
         i += 1
-        dic['Entity {}'.format(i)] = (entity.text, entity.label_)
+        dic['Entity {}'.format(i)] = (entity.text, entity.label_, entity.vector)
     return dic
 
 def parse_entities(raw_text):

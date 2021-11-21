@@ -48,11 +48,11 @@ if __name__ == '__main__':
             entities = _parse_entities(raw_text)
             if (entities == None or len(entities) < 1):
                 continue
-            print (entities)
+            #print (entities)
             wiki_entities = _search_entities(entities)
             #print (wiki_entities)
             final_entities = _disambiguate_entities(raw_text, wiki_entities, "naive")
-            print(final_entities)
+            #print(final_entities)
             write_result(f, final_entities, page_id)
         except Exception as e:
             print (e)

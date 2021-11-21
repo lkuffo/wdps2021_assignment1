@@ -1,5 +1,10 @@
 import requests
 import json
+import spacy
+from scipy import spatial
+
+# Load English tokenizer, tagger, parser and NER
+nlp = spacy.load("en_core_web_sm")
 
 from elasticsearch import Elasticsearch
 
@@ -12,6 +17,7 @@ def search_entities(query):
     for entityId, entity in query.items():
         label = entity[0]
         label_type = entity[1]
+        label_vector = entity[2]
         if label_type in ENTITIES_TO_IGNORE: # Ignore entities from certain categories
             continue
         if len(label) < 2: # Do not take into account single characters entities
@@ -33,5 +39,11 @@ def search_entities(query):
                 else:
                     label_es = label
                 id_es = hit['_id']
+
+                vector_es = nlp(label_es).vector
+
+                cosine_similarity = 1 - spatial.distance.cosine(vector_es, label_vector)
+                print(label, label_es, cosine_similarity)
+
                 wikidata_entities[entityId].append([id_es, label_es, score_es, label])
     return wikidata_entities
