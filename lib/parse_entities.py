@@ -65,7 +65,8 @@ def parse_entities(raw_text):
     for segment in text_splitted:
         segment_entities_list = spacy_ner_from_text(segment)
         print (segment_entities_list)
-        entities_list += segment_entities_list
+        if segment_entities_list != None:
+            entities_list += segment_entities_list
     if (entities_list == None or len(entities_list) < 1):
         return None
     return spacy_dictionary(entities_list)
