@@ -44,7 +44,7 @@ def search_entities(query):
                 vector_es = nlp(label_es).vector
 
                 cosine_similarity = 1 - spatial.distance.cosine(vector_es, label_vector)
-                print(label, label_es, cosine_similarity)
+                #print(label, label_es, cosine_similarity)
                 if cosine_similarity < 0.40:
                     continue
 
