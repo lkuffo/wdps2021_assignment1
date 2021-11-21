@@ -9,10 +9,12 @@ ENTITIES_TO_IGNORE = ['DATE', 'TIME', 'PERCENT', 'MONEY', 'QUANTITY', 'ORDINAL',
 
 def search_entities(query):
     wikidata_entities = {}
-    for entity in query.values():
+    for entityId, entity in query.items():
         label = entity[0]
         label_type = entity[1]
-        if label_type in ENTITIES_TO_IGNORE:
+        if label_type in ENTITIES_TO_IGNORE: # Ignore entities from certain categories
+            continue
+        if len(label) < 2: # Do not take into account single characters entities
             continue
         p = {
             "query": {
@@ -22,7 +24,7 @@ def search_entities(query):
             }
         }
         response = e.search(index="wikidata_en", body=json.dumps(p))
-        wikidata_entities[label] = []
+        wikidata_entities[entityId] = []
         if response and response['hits'] and response['hits']['hits']:
             for hit in response['hits']['hits']:
                 score_es = hit['_score']
@@ -31,7 +33,5 @@ def search_entities(query):
                 else:
                     label_es = label
                 id_es = hit['_id']
-                wikidata_entities[label].append([id_es, label_es, score_es])
-                #id_labels.setdefault(id_es, set()).add(label_es)
-        #wikidata_entities.append(id_labels)
+                wikidata_entities[entityId].append([id_es, label_es, score_es, label])
     return wikidata_entities
