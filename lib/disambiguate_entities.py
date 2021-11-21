@@ -40,6 +40,7 @@ def get_popularity(wikiID):
     """
     try:
         results = int(sparqlQuery(query)["results"]["bindings"][0]["Triples"]["value"])
+        print(results)
         return results
     except Exception as e:
         print (e)
