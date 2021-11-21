@@ -126,11 +126,8 @@ def text_extract(html_prase):
 
         VALID_TAGS = ['div', 'p']
         # Select only relevant tags:
-        for tag in soup.findAll('p'):
-            if tag.name not in VALID_TAGS:
-                tag.replaceWith(tag.renderContents())
-
-        text = body.get_text(separator='')
+        text = soup.find('p').get_text()
+        #text = body.get_text(separator='')
     print (text)
     return text
 
