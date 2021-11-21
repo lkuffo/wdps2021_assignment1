@@ -12,7 +12,6 @@ from selectolax.parser import HTMLParser
 #from lxml.html import fromstring
 from pyquery import PyQuery
 #from polyglot.text import Text,Detector
-#from dragnet import extract_content
 
 def isurl(url):
     regex = re.compile(
@@ -109,26 +108,65 @@ def get_warc_from_pathfile(pathfile):
                     yield line.decode('utf-8')[:-1]
                 else:
                     return
+
+
+def pathfile_test():
+    print('-----pathfile test begin-----') 
+    url='https://commoncrawl.s3.amazonaws.com/'
+    urlpathfile='https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-40/segments/1600400187354.1/warc/CC-MAIN-20200918061627-20200918091627-00000.warc.gz'
+    #pathfile='data/warc.paths.gz'  
+    #print('read net pathfile get four warcfile::') 
+    for i,warcfile in enumerate(get_warc_from_pathfile(urlpathfile)):
+        if i==0:
+            filename=warcfile
+            print(url + filename)      
+        else:
+            break
+    print('-----pathfile test end-----')  
+
+def warcfile_test():
+    print('-----warcfile test begin-----') 
+    urlwet='https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-40/segments/1600400187354.1/wet/CC-MAIN-20200918061627-20200918091627-00000.warc.wet.gz'
+    urlwarc='https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2020-40/segments/1600400187354.1/warc/CC-MAIN-20200918061627-20200918091627-00000.warc.gz'
+    warcfile='D:/assignment-all-splitted/assignment/data/warcs/CC-MAIN-20200927121105-20200927151105-00583.warc.gz'
+    print('local warcfile read test, read 2 files:') 
+    for i,html in enumerate(get_html_warc(warcfile)):
+        if i<2: 
+            #print(html)
+            text_extract(html)
+        else:
+            break
+    print('net warcfile read test, read second file:') 
+    for i,html in enumerate(get_html_warc(urlwarc)):
+        if i<2: 
+            continue
+        else:
+            #print(html)
+            text_extract(html)
+            break
+    
+    print('net wetfile read test, read first file:') 
+    for i,html in enumerate(get_html_warc(urlwet)):
+        if i==0: 
+            print(html)
+            text_extract(html)
+        else:
+            break
+    print('-----warcfile test end-----') 
     
 
 def text_extract(html_prase):
-    try: 
-        text = extract_content(html_phrase)
-    except:
-        soup= BeautifulSoup(html_prase,'lxml')
-        body= soup.body
-        if body is None:
-            return None
-        for tag in body.select('script'):
-            tag.decompose()
-        for tag in body.select('style'):
-            tag.decompose()
+    output=''
+    soup= BeautifulSoup(html_prase,'lxml')
+    body= soup.body
+    if body is None:
+        return None
+    for tag in body.select('script'):
+        tag.decompose()
+    for tag in body.select('style'):
+        tag.decompose()
 
-        VALID_TAGS = ['div', 'p']
-        # Select only relevant tags:
-        text = soup.find('p').get_text()
-        #text = body.get_text(separator='')
-    print (text)
+    text = body.get_text(separator='')
     return text
 
 def save_to_file(file_name,contents):
