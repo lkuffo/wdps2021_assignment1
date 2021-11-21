@@ -105,7 +105,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
             if (method == "popularity"):
                 sort_ranking = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"]), reverse=True).values())
                 print(sort_ranking)
-                best_ranked_entity = sort_ranking[0]["info"]
+                best_ranked_entity = sort_ranking[-1]["info"]
                 print(best_ranked_entity)
                 found_entities.append([best_ranked_entity[0], best_ranked_entity[-1], best_ranked_entity[1]])
     return found_entities
