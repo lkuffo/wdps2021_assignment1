@@ -81,7 +81,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                     disambiguate_rankings[label] = {
                         "popularity": 0,
                         "relations": 0,
-                        info: [wikiID, label, score, original_label]
+                        "info": [wikiID, label, score, original_label]
                     }
 
                 if len(found_entities) > 0:
