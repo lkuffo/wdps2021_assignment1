@@ -1,4 +1,4 @@
-import urllib, json, requests, json
+import urllib, json, requests, json, traceback
 
 """
 This file demonstrates how to make a simple SPARQL query against the public
@@ -43,6 +43,7 @@ def get_popularity(wikiID):
         return results
     except Exception as e:
         print (e)
+        traceback.print_exc()
         return 0
 
 def get_connections(wikiID1, wikiIDs):
@@ -65,6 +66,7 @@ def get_connections(wikiID1, wikiIDs):
         return results
     except Exception as e:
         print (e)
+        traceback.print_exc()
         return 0
 
 def checkIfPerson(wikiID):
@@ -81,6 +83,7 @@ def checkIfPerson(wikiID):
         return results
     except Exception as e:
         print (e)
+        traceback.print_exc()
         return 0
 
 def disambiguate_entities(raw_text, entities, method = "naive"):
