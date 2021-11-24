@@ -138,6 +138,10 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                 entity_popularity = get_popularity(wikiID)
                 disambiguate_rankings[label]["popularity"] = entity_popularity
 
+            # No candidates
+            if (len(disambiguate_rankings) < 1):
+                continue
+                
             print ('RANKING RAW', disambiguate_rankings)
             sort_ranking_popularity = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"])).values())
             sort_ranking_connections = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["relations"])).values())
