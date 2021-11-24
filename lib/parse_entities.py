@@ -63,10 +63,14 @@ def parse_entities(raw_text):
     entities_list = []
     text_splitted = raw_text.split('\n')
     for segment in text_splitted:
+        # We ignore segments of the webpage with less than 5 characters
+        if (len(segment) < 5):
+            continue
         segment_entities_list = spacy_ner_from_text(segment)
         #print (segment_entities_list)
-        if segment_entities_list != None:
+        if segment_entities_list != None and len(segment_entities_list) > 0:
             entities_list += segment_entities_list
+    entities_list = spacy_ner_from_text(raw_text)
     if (entities_list == None or len(entities_list) < 1):
         return None
     return spacy_dictionary(entities_list)
