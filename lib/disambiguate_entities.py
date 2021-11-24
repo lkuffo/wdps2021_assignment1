@@ -45,15 +45,18 @@ def get_popularity(wikiID):
         print (e)
         return 0
 
-def get_connections(wikiID1, wikiID2):
+def get_connections(wikiID1, wikiIDs):
     entityId1 = wikiID1.replace('>', '').split('/')[-1]
-    entityId2 = wikiID2.replace('>', '').split('/')[-1]
+    wikiIDs_formatted = []
+    for wikiId in wikiIDs:
+        entityId = "wd:" + wikiId.replace('>', '').split('/')[-1]
+        wikiIDs_formatted.append(entityId)
     query = """
         PREFIX wd: <http://www.wikidata.org/entity/>  
         SELECT (COUNT(*) as ?Triples) 
         WHERE {
             VALUES ?s {  wd:""" + entityId1 + """ }
-            VALUES ?o {  wd:""" + entityId2 + """ }
+            VALUES ?o {  """ + " ".join(wikiIDs_formatted) + """ }
             ?s ?p ?o
         }
     """
@@ -64,11 +67,27 @@ def get_connections(wikiID1, wikiID2):
         print (e)
         return 0
 
+def checkIfPerson(wikiID):
+    entityId = wikiID.replace('>', '').split('/')[-1]
+    query = """
+        PREFIX wd: <http://www.wikidata.org/entity/>  
+        select ?item where {
+            ?item wdt:P31 wd:Q5; 
+            VALUES ?item {  wd:""" + entityId + """ }
+        }
+    """
+    try:
+        results = len(sparqlQuery(query)["results"]["bindings"])
+        return results
+    except Exception as e:
+        print (e)
+        return 0
+
 def disambiguate_entities(raw_text, entities, method = "naive"):
     found_entities = []
     if method == "naive":
         for entityLocalId, entity in entities.items():
-            for wikiID, label, score, original_label in entity:
+            for wikiID, label, score, original_label, label_type in entity:
                 found_entities.append([wikiID, original_label, label])
                 break
     else:
@@ -78,7 +97,13 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
             disambiguate_rankings = {}
 
             # For each candidate of the entity
-            for wikiID, label, score, original_label in entity:
+            for wikiID, label, score, original_label, label_type in entity:
+                # If the entity is a PERSON we can easily remove candidates
+                if label_type === 'PERSON':
+                    if len(checkIfPerson(wikiID)) < 1:
+                        continue
+
+                # Initiate ranking for entity
                 if label not in disambiguate_rankings:
                     disambiguate_rankings[label] = {
                         "popularity": 0,
@@ -86,7 +111,9 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                         "info": [wikiID, label, score, original_label]
                     }
 
+                # If we have already found entities
                 if len(found_entities) > 0:
+                    # Same context assumption search
                     for wikiID_tmp, label_tmp, es_tmp_label in found_entities:
                         # Same context assumption
                         if (wikiID_tmp == wikiID):
@@ -96,16 +123,28 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                     if found == 1:
                         break
 
+                    # Search for connections with already found entities
+                    found_wiki_ids = []
                     for wikiID_tmp, label_tmp, es_tmp_label in found_entities:
-                        local_connections = get_connections(wikiID, wikiID_tmp)
-                        disambiguate_rankings[label]["relations"] += local_connections
-            
+                        found_wiki_ids.append(wikiID_tmp)
+                    local_connections = get_connections(wikiID, found_wiki_ids)
+                    disambiguate_rankings[label]["relations"] += local_connections
+
+                # Calculate entity popularity
                 entity_popularity = get_popularity(wikiID)
                 disambiguate_rankings[label]["popularity"] = entity_popularity
-            if (method == "popularity"):
-                sort_ranking = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"])).values())
-                print(sort_ranking)
-                best_ranked_entity = sort_ranking[-1]["info"]
-                print(best_ranked_entity)
-                found_entities.append([best_ranked_entity[0], best_ranked_entity[-1], best_ranked_entity[1]])
+
+            sort_ranking_popularity = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"])).values())
+            sort_ranking_connections = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["relations"])).values())
+
+            print(sort_ranking_popularity)
+
+            # Best ranked in terms of popularity
+            best_ranked_entity = sort_ranking_popularity[-1]["info"]
+            # If there are relations with already foudn entities, we prioritize this ranking over popularity
+            if (sort_ranking_connections[-1]["relations"] > 0):
+                best_ranked_entity = sort_ranking_connections[-1]["info"]
+
+            print(best_ranked_entity)
+            found_entities.append([best_ranked_entity[0], best_ranked_entity[-1], best_ranked_entity[1]])
     return found_entities

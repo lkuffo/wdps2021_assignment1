@@ -76,17 +76,26 @@ WHERE
 }
 """
 
-# Get number of triplets between two entities
 # query = """
-# PREFIX wd: <http://www.wikidata.org/entity/>  
-# SELECT (COUNT(*) as ?Triples) 
-# WHERE 
-# {
-#   VALUES ?s {  wd:Q2610973  }
-#   VALUES ?o {  wd:Q1065414  }
-#   ?s ?p ?o
-# }
+#     PREFIX wd: <http://www.wikidata.org/entity/>  
+#     PREFIX wdt: <http://www.wikidata.org/prop/direct/> 
+#     select ?item where {
+#         ?item wdt:P31 wd:Q5 .
+#         VALUES ?item {  wd:Q352 }
+#     }
 # """
+
+# Get number of triplets between two entities
+query = """
+PREFIX wd: <http://www.wikidata.org/entity/>  
+SELECT (COUNT(*) as ?Triples) 
+WHERE 
+{
+  VALUES ?s {  wd:Q2610973  }
+  VALUES ?o {  wd:Q1065414 wd:Q1111  }
+  ?s ?p ?o
+}
+"""
 
 # RESULTS LENGTH = MORE POPULAR = CORRECT RESULTS
 # 

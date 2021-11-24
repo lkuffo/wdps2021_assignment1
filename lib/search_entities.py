@@ -11,7 +11,9 @@ from elasticsearch import Elasticsearch
 e = Elasticsearch()
 ENTITIES_TO_IGNORE = ['DATE', 'TIME', 'PERCENT', 'MONEY', 'QUANTITY', 'ORDINAL', 'CARDINAL']
 
-
+#
+# query: Dictionary of lists containing the entities from the entity recognition process
+#
 def search_entities(query):
     wikidata_entities = {}
     for entityId, entity in query.items():
@@ -30,6 +32,7 @@ def search_entities(query):
             },
             "size": 20
         }
+        # Query candidates to elasticsearch
         response = e.search(index="wikidata_en", body=json.dumps(p))
         wikidata_entities[entityId] = []
         if response and response['hits'] and response['hits']['hits']:
@@ -41,12 +44,15 @@ def search_entities(query):
                     label_es = label
                 id_es = hit['_id']
 
+                # We obtain the word embeddings vector of the out of context term
                 vector_es = nlp(label_es).vector
-
+                # We calculate cosime similarity of the entity with the candidate
                 cosine_similarity = 1 - spatial.distance.cosine(vector_es, label_vector)
                 #print(label, label_es, cosine_similarity, score_es)
+
+                # Treshhold to be considered as a candidate
                 if cosine_similarity < 0.40:
                     continue
 
-                wikidata_entities[entityId].append([id_es, label_es, score_es, label])
+                wikidata_entities[entityId].append([id_es, label_es, score_es, label, label_type])
     return wikidata_entities
