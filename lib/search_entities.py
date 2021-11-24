@@ -30,7 +30,7 @@ def search_entities(query):
                     "query": label
                 }
             },
-            "size": 20
+            "size": 10
         }
         # Query candidates to elasticsearch
         response = e.search(index="wikidata_en", body=json.dumps(p))

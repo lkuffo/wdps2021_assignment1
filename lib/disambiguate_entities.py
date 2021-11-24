@@ -141,12 +141,14 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
             # No candidates
             if (len(disambiguate_rankings) < 1):
                 continue
-                
-            print ('RANKING RAW', disambiguate_rankings)
+
+            #print ('RANKING RAW', disambiguate_rankings)
+
+            # Sorting candidates by their scores of popularity and connections with other found entities
             sort_ranking_popularity = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["popularity"])).values())
             sort_ranking_connections = list(dict(sorted(disambiguate_rankings.items(), key=lambda item: item[1]["relations"])).values())
 
-            print('SORTED RANKING', sort_ranking_popularity)
+            #print('SORTED RANKING', sort_ranking_popularity)
 
             # Best ranked in terms of popularity
             best_ranked_entity = sort_ranking_popularity[-1]["info"]
