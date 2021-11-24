@@ -75,7 +75,7 @@ def checkIfPerson(wikiID):
         PREFIX wd: <http://www.wikidata.org/entity/>  
         PREFIX wdt: <http://www.wikidata.org/prop/direct/>
         select ?item where {
-            ?item wdt:P31 wd:Q5; 
+            ?item wdt:P31 wd:Q5 . 
             VALUES ?item {  wd:""" + entityId + """ }
         }
     """
