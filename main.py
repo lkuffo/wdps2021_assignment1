@@ -39,7 +39,7 @@ if __name__ == '__main__':
     f = open(OUTPUT_FILE, 'w')
     i = 0
     for html_prase, page_id in get_html_warc(INPUT):
-        if i == 11:
+        if i == 92:
             break
         try: 
             raw_text = text_extract(html_prase)

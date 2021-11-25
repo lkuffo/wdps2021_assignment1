@@ -30,8 +30,12 @@ def remove_special_characters(text):
 def clean_text(raw_text):
 
     text = remove_urls(raw_text)
-    text = remove_mentions(raw_text)
-    text = remove_hashtags(raw_text)
-    text = remove_special_characters(raw_text)
+    text = remove_mentions(text)
+    text = remove_hashtags(text)
+    try:
+        text = remove_special_characters(text)
+    except Exception as e:
+        print ("Catched exception", e)
+        text = text
 
     return text
