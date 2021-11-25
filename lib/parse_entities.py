@@ -8,6 +8,7 @@ Spacy NER
 """
 import spacy
 spacy.cli.download("en")
+spacy.cli.download("en_core_web_md")
 
 """
 PERSON:      People, including fictional.
@@ -30,7 +31,7 @@ ORDINAL:     “first”, “second”, etc.
 CARDINAL:    Numerals that do not fall under another type.
 """
 # Load English tokenizer, tagger, parser and NER
-nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("en_core_web_md")
 
 
 # Process whole documents
