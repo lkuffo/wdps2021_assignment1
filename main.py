@@ -48,7 +48,7 @@ if __name__ == '__main__':
             entities = _parse_entities(raw_text)
             if (entities == None or len(entities) < 1):
                 continue
-            print (entities)
+            #print (entities)
             wiki_entities = _search_entities(entities)
             if (wiki_entities == None or len(wiki_entities) < 1):
                 continue
