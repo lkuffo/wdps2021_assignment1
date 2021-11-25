@@ -39,8 +39,8 @@ if __name__ == '__main__':
     f = open(OUTPUT_FILE, 'w')
     i = 0
     for html_prase, page_id in get_html_warc(INPUT):
-        if i == 10:
-            break
+        # if i == 10: # Early break
+        #     break
         try: 
             raw_text = text_extract(html_prase)
             raw_text = clean_text(raw_text)
