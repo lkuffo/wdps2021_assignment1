@@ -53,8 +53,8 @@ def search_entities(query):
                 if cosine_similarity < 0.80:
                     continue
 
-                if (entityId not in wikidata_entities){
+                if (entityId not in wikidata_entities):
                     wikidata_entities[entityId] = []
-                }
+                
                 wikidata_entities[entityId].append([id_es, label_es, score_es, label, label_type])
     return wikidata_entities
