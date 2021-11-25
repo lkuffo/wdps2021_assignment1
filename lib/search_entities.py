@@ -4,7 +4,7 @@ import spacy
 from scipy import spatial
 
 # Load English tokenizer, tagger, parser and NER
-nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("en_core_web_lg")
 
 from elasticsearch import Elasticsearch
 
