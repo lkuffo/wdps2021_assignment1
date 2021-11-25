@@ -39,7 +39,7 @@ if __name__ == '__main__':
     f = open(OUTPUT_FILE, 'w')
     i = 0
     for html_prase, page_id in get_html_warc(INPUT):
-        if i == 1:
+        if i == 10:
             break
         try: 
             raw_text = text_extract(html_prase)
@@ -52,6 +52,7 @@ if __name__ == '__main__':
             wiki_entities = _search_entities(entities)
             if (wiki_entities == None or len(wiki_entities) < 1):
                 continue
+            continue
             #print (wiki_entities)
             final_entities = _disambiguate_entities(raw_text, wiki_entities, "popularity")
             #print(final_entities)
