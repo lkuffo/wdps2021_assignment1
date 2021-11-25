@@ -120,7 +120,7 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
                     # Same context assumption search
                     for wikiID_tmp, label_tmp, es_tmp_label in found_entities:
                         # Same context assumption
-                        if (wikiID_tmp == wikiID):
+                        if (label_tmp == original_label):
                             found_entities.append([wikiID, original_label, label])
                             found = 1
                             break
