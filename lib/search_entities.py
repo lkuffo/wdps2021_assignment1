@@ -31,10 +31,11 @@ def search_entities(query):
                         "query": label
                     }
                 },
-                "size": 20
+                "size": 30
             }
             # Query candidates to elasticsearch
             response = e.search(index="wikidata_en", body=json.dumps(p))
+            perfect_similarity_found = False
             if response and response['hits'] and response['hits']['hits']:
                 for hit in response['hits']['hits']:
                     score_es = hit['_score']
@@ -53,6 +54,17 @@ def search_entities(query):
                     # Treshhold to be considered as a candidate
                     if cosine_similarity < 0.80:
                         continue
+
+                    # If we have already found a perfect match, we do not accept other matches that are not perfect
+                    if perfect_similarity_found and cosine_similarity != 1:
+                        continue
+
+                    # Perfect match
+                    if cosine_similarity == 1:
+                        if (perfect_similarity_found == False):
+                            # If it is the first perfect match, we remove all the already found matches
+                            wikidata_entities[entityId] = []
+                        perfect_similarity_found = True
 
                     if (entityId not in wikidata_entities):
                         wikidata_entities[entityId] = []
