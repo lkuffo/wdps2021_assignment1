@@ -31,7 +31,7 @@ def search_entities(query):
                         "query": label
                     }
                 },
-                "size": 30
+                "size": 20
             }
             # Query candidates to elasticsearch
             response = e.search(index="wikidata_en", body=json.dumps(p))
@@ -49,7 +49,7 @@ def search_entities(query):
                     vector_es = nlp(label_es).vector
                     # We calculate cosime similarity of the entity with the candidate
                     cosine_similarity = 1 - spatial.distance.cosine(vector_es, label_vector)
-                    #print(label, label_es, cosine_similarity, score_es)
+                    print(label, label_es, cosine_similarity, score_es)
 
                     # Treshhold to be considered as a candidate
                     if cosine_similarity < 0.80:
