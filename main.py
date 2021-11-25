@@ -53,6 +53,7 @@ if __name__ == '__main__':
             if (wiki_entities == None or len(wiki_entities) < 1):
                 continue
             print (wiki_entities)
+            input("PRESS ENTER")
             continue
             final_entities = _disambiguate_entities(raw_text, wiki_entities, "popularity")
             #print(final_entities)
