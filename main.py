@@ -52,9 +52,9 @@ if __name__ == '__main__':
             wiki_entities = _search_entities(entities)
             if (wiki_entities == None or len(wiki_entities) < 1):
                 continue
-            print (wiki_entities)
-            input("PRESS ENTER")
-            continue
+            #print (wiki_entities)
+            #input("PRESS ENTER")
+            #continue
             final_entities = _disambiguate_entities(raw_text, wiki_entities, "popularity")
             #print(final_entities)
             write_result(f, final_entities, page_id)
