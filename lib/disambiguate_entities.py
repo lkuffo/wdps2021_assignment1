@@ -103,9 +103,9 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
             # For each candidate of the entity
             for wikiID, label, score, original_label, label_type in entity:
                 # If the entity is a PERSON we can easily remove candidates
-                if label_type == 'PERSON':
-                    if checkIfPerson(wikiID) < 1:
-                        continue
+                # if label_type == 'PERSON':
+                #     if checkIfPerson(wikiID) < 1:
+                #         continue
 
                 # Initiate ranking for entity
                 if label not in disambiguate_rankings:
