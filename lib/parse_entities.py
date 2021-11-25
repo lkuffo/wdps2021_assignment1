@@ -7,8 +7,6 @@ This is a NER Candidate used in wdps assignment1 Entity linker
 Spacy NER
 """
 import spacy
-spacy.cli.download("en")
-spacy.cli.download("en_core_web_lg")
 
 """
 PERSON:      People, including fictional.
@@ -31,8 +29,12 @@ ORDINAL:     “first”, “second”, etc.
 CARDINAL:    Numerals that do not fall under another type.
 """
 # Load English tokenizer, tagger, parser and NER
-nlp = spacy.load("en_core_web_lg")
-
+try:
+    nlp = spacy.load("en_core_web_lg")
+except: # If they are not present, we must download
+    spacy.cli.download("en")
+    spacy.cli.download("en_core_web_lg")
+    nlp = spacy.load("en_core_web_lg")
 
 # Process whole documents
 def spacy_ner_from_file(file_location):
