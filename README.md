@@ -48,7 +48,7 @@ Finally, we seek for the **entity relationships with the entities already found*
 
 We prioritize the ranking of our third metric over our second metric. If no relationships can be found, we use the ranking of our second metric (i.e. popularity). The top ranked entity is selected as the best entity and is prepared to be written on the output.
 
-In addition to this we also directly select entities based on the **same context principle**. That is, if an entity have been already disambiguated in the same page, we will use the previously chosen candidate.
+In addition to this we also directly select entities based on the **same context principle**. That is, if an entity has been already disambiguated in the same page, we will use the previously chosen candidate.
 
 **Other techniques:** We tried validating spaCy entity types output with Wikidata relations (e.g. PERSONS spaCy entities must be an *instanceOf* Human in wikidata). However, entities such as **Flash Player** being recognized as **PERSONS** were diminishing the accuracy of our implementation. Hence, we decided not to use this approach. 
 
