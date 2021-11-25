@@ -39,26 +39,24 @@ if __name__ == '__main__':
     f = open(OUTPUT_FILE, 'w')
     i = 0
     for html_prase, page_id in get_html_warc(INPUT):
-        # if i == 10: # Early break
-        #     break
         try: 
             raw_text = text_extract(html_prase)
             raw_text = clean_text(raw_text)
             #print (raw_text)
+
             entities = _parse_entities(raw_text)
             if (entities == None or len(entities) < 1):
                 continue
             #print (entities)
+
             wiki_entities = _search_entities(entities)
             if (wiki_entities == None or len(wiki_entities) < 1):
                 continue
-            #print (wiki_entities)
-            #input("PRESS ENTER")
-            #continue
+
             final_entities = _disambiguate_entities(raw_text, wiki_entities, "popularity")
             #print(final_entities)
             write_result(f, final_entities, page_id)
-            #input("PRESS ENTER")
+
         except Exception as e:
             traceback.print_exc()
             print (e)
