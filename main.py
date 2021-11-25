@@ -26,7 +26,7 @@ def _clean_text(raw_text):
 
 def write_result(file_pointer, entities, page_id):
     for wikiID, label, wikiLabel in entities:
-        file_pointer.write(page_id + '\t' + wikiID + '\t' + label.replace("\n", "").replace("\t", "") + '\n')
+        file_pointer.write(page_id + '\t' + label.replace("\n", "").replace("\t", "") + '\t' + wikiID + '\n')
 
 if __name__ == '__main__':
     import sys
