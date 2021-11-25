@@ -59,5 +59,6 @@ def search_entities(query):
                     
                     wikidata_entities[entityId].append([id_es, label_es, score_es, label, label_type])
         except Exception as e:
+            print (e)
             continue
     return wikidata_entities
