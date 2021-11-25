@@ -67,7 +67,7 @@ def parse_entities(raw_text):
         if (len(segment) < 5):
             continue
         segment_entities_list = spacy_ner_from_text(segment)
-        #print (segment_entities_list)
+        print (segment_entities_list)
         if segment_entities_list != None and len(segment_entities_list) > 0:
             entities_list += segment_entities_list
     entities_list = spacy_ner_from_text(raw_text)
