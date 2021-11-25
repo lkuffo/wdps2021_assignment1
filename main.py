@@ -44,7 +44,7 @@ if __name__ == '__main__':
         try: 
             raw_text = text_extract(html_prase)
             raw_text = clean_text(raw_text)
-            print (raw_text)
+            #print (raw_text)
             entities = _parse_entities(raw_text)
             if (entities == None or len(entities) < 1):
                 continue
