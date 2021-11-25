@@ -42,6 +42,7 @@ def search_entities(query):
                     if ('schema_name' in hit['_source']):
                         label_es = hit['_source']['schema_name'].replace("\n", "").replace("\t", "")
                     else:
+                        continue
                         label_es = label
                     id_es = hit['_id']
 
