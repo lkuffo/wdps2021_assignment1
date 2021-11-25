@@ -17,7 +17,7 @@ ENTITIES_TO_IGNORE = ['DATE', 'TIME', 'PERCENT', 'MONEY', 'QUANTITY', 'ORDINAL',
 def search_entities(query):
     wikidata_entities = {}
     for entityId, entity in query.items():
-        label = entity[0]
+        label = entity[0].replace("\n", "").replace("\t", "")
         label_type = entity[1]
         label_vector = entity[2]
         if label_type in ENTITIES_TO_IGNORE: # Ignore entities from certain categories
@@ -38,7 +38,7 @@ def search_entities(query):
             for hit in response['hits']['hits']:
                 score_es = hit['_score']
                 if ('schema_name' in hit['_source']):
-                    label_es = hit['_source']['schema_name']
+                    label_es = hit['_source']['schema_name'].replace("\n", "").replace("\t", "")
                 else:
                     label_es = label
                 id_es = hit['_id']
