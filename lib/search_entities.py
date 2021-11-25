@@ -30,11 +30,10 @@ def search_entities(query):
                     "query": label
                 }
             },
-            "size": 10
+            "size": 20
         }
         # Query candidates to elasticsearch
         response = e.search(index="wikidata_en", body=json.dumps(p))
-        wikidata_entities[entityId] = []
         if response and response['hits'] and response['hits']['hits']:
             for hit in response['hits']['hits']:
                 score_es = hit['_score']
@@ -51,8 +50,11 @@ def search_entities(query):
                 print(label, label_es, cosine_similarity, score_es)
 
                 # Treshhold to be considered as a candidate
-                if cosine_similarity < 0.40:
+                if cosine_similarity < 0.80:
                     continue
 
+                if (entityId not in wikidata_entities){
+                    wikidata_entities[entityId] = []
+                }
                 wikidata_entities[entityId].append([id_es, label_es, score_es, label, label_type])
     return wikidata_entities
