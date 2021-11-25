@@ -56,7 +56,7 @@ if __name__ == '__main__':
             final_entities = _disambiguate_entities(raw_text, wiki_entities, "popularity")
             #print(final_entities)
             write_result(f, final_entities, page_id)
-            input("PRESS ENTER")
+            #input("PRESS ENTER")
         except Exception as e:
             traceback.print_exc()
             print (e)
