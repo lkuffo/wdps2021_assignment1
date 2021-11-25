@@ -39,16 +39,16 @@ if __name__ == '__main__':
     f = open(OUTPUT_FILE, 'w')
     i = 0
     for html_prase, page_id in get_html_warc(INPUT):
-        if i == 92:
+        if i == 10:
             break
         try: 
             raw_text = text_extract(html_prase)
             raw_text = clean_text(raw_text)
-            #print (raw_text)
+            print (raw_text)
             entities = _parse_entities(raw_text)
             if (entities == None or len(entities) < 1):
                 continue
-            #print (entities)
+            print (entities)
             wiki_entities = _search_entities(entities)
             if (wiki_entities == None or len(wiki_entities) < 1):
                 continue
