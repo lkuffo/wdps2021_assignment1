@@ -60,7 +60,7 @@ After having our best ranked entities selected we generate an output file. This 
 
 To run our code, follow these steps:
 
-1. Install the needed dependencies: `pip install requirements.txt`
+1. Install the needed dependencies: `pip install -r requirements.txt`
 
 2. Run the code: Two alternatives
 
