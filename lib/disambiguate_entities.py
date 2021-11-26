@@ -163,6 +163,6 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
     else:
         # We create a multiprocessing pool for each entity that we must dissambiguate
         pool_entities = entities.items()
-        p = Pool(20) # maximum 20 entities at a time
+        p = Pool(10) # maximum 20 entities at a time
         found_entities = p.map(rank_entities, pool_entities)
         return list(filter(None, found_entities)) # Filter out None results (when an entity could not be found)
