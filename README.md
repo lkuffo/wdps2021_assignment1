@@ -42,9 +42,9 @@ To select a proper entity we must rank the candidates obtained from the previous
 
 First, we obtain the **Word Embeddings Vectors** from the entities inside the context in which they appear, and the vector from the isolated term label obtained from ElasticSearch. spaCy implements word embeddings vectors natively when analyzing any piece of text. Next we compute the cosine similarity between these two vectors and filter out all the vectors with a similarity lower than 0.80. The remaining entities are subject to the next two ranking criteria. This threshold was obtained by trial and error using the provided sample WARC file and sample output annotations. 
 
-Furthermore, if we find an exact matches of labels between the found entity and the elastic search label, we then prioritize this exact matches and discard other candidates. All the exact matches will then go to the next step of disambiguation. An exact match are two words in which each letter of each position is equal.
+Furthermore, if we find exact matches of labels between the found entity and the elastic search label, we then prioritize these exact matches and discard other candidates. All the exact matches will then go to the next step of disambiguation. An exact match is two words in which each letter of each position is equal.
 
-For our second ranking crtieria we compute the **entity's popularity**. In order to do this, we use the Wikidata knowledge base (KB) and SPARQL to query the KB. We defined the popularity of an entity as the number of triplets this entity has in the KB. We hypothesize that a more popular entity will have more triplets than a less popular entity. Each triplet found gives a +1 to the candidate. Queries to Wikidata KB were done through the **Virtuoso** server provided by the course professor. 
+For our second ranking criteria we compute the **entity's popularity**. In order to do this, we use the Wikidata knowledge base (KB) and SPARQL to query the KB. We defined the popularity of an entity as the number of triplets this entity has in the KB. We hypothesize that a more popular entity will have more triplets than a less popular entity. Each triplet found gives a +1 to the candidate. Queries to Wikidata KB were done through the **Virtuoso** server provided by the course professor. 
 
 **Other tried techniques:** We tried validating spaCy entity types output with Wikidata relations (e.g. PERSONS spaCy entities must be an *instanceOf* Human in wikidata). However, entities such as **Flash Player** being recognized as **PERSONS** were diminishing the accuracy of our implementation. Hence, we decided not to use this approach. We also tried seeking for the **entity relationships with the entities already found** in the context and using this as a third ranking criteria, however our results were not positively impacted by this technique.
 
@@ -64,16 +64,16 @@ To run our code, follow these steps:
 
 4. Run the code: Two alternatives
 
-   - You can run the code by running the `sh main.sh` file which assumes the following paths for input and output respectively:  `data/sample.warc.gz  sample_predictions.tsv`. And for the scoring input and output: `data/sample_annotations.tsv sample_predictions.tsv`. This will execute the Entity Linker and the `score.py` file to calculate accuracy, recall and f1 score.
+   - SH File (Entity Linker + Score): You can run the code by running the `sh main.sh` file which assumes the following paths for input and output respectively:  `data/sample.warc.gz  sample_predictions.tsv`. And for the scoring input and output: `data/sample_annotations.tsv sample_predictions.tsv`. This will execute the Entity Linker and the `score.py` file to calculate accuracy, recall and f1 score.
 
 
-   - You can also run the code separately by running `python3 main.py data/sample.warc.gz`. The latter parameter is the input of the WARC file. Then run `python3 score.py data/sample_annotations.tsv sample_predictions.tsv`. The latter parameters are the expected samples and the output file of the *main.py* program respectively. 
+   - Separately: You can also run the code separately by running `python3 main.py data/sample.warc.gz`. The latter parameter is the input of the WARC file. Then run `python3 score.py data/sample_annotations.tsv sample_predictions.tsv`. The latter parameters are the expected samples and the output file of the *main.py* program respectively. 
 
-5. NOTES: 1) On the first run, the program will download about 800MB of data corresponding to the spaCy models. 2) The program needs at least 1GB of free memory to load the spaCy models.
+5. NOTES: 1) On the first run, the program will download about 800MB of data corresponding to the spaCy models. 2) The program needs at least 1GB of free memory to load the spaCy models. 3) At runtime, the program will print on screen each of the entities found in the following format: wikidataID, entity label, ES score, ES entity label. This is not the file output, it is only a runtime output to give feedback to the user.
 
 ## 4. Concurrency
 
-Our program tries to scalate by using multiprocessing when dissambiguating entities. It dissambiguates 30 parallel entities (at most) at a time. The latter parameter is configurable. 
+Our program tries to scalate by using multiprocessing when disambiguating entities. It disambiguates 30 parallel entities (at most) at a time. The latter parameter is configurable
 
 ## 5. Limitations
 
