@@ -92,7 +92,6 @@ def checkIfPerson(wikiID):
 
 # Entities ranking
 def rank_entities(pool_entity):
-    print (pool_entity)
     entityLocalId, entity = pool_entity
     disambiguate_rankings = {}
 
@@ -153,7 +152,7 @@ def rank_entities(pool_entity):
 
 def disambiguate_entities(raw_text, entities, method = "naive"):
 
-    # Fisrt method implemented, only select the first candidate
+    # Fisrt method implemented, only select the first candidate from ES
     if method == "naive":
         found_entities = []
         for entityLocalId, entity in entities.items():
@@ -164,6 +163,6 @@ def disambiguate_entities(raw_text, entities, method = "naive"):
     else:
         # We create a multiprocessing pool for each entity that we must dissambiguate
         pool_entities = entities.items()
-        #p = Pool(len(pool_entities))
         p = Pool(30) # maximum 30 entities at a time
-        return p.map(rank_entities, pool_entities)
+        found_entities = p.map(rank_entities, pool_entities)
+        return list(filter(None, found_entities)) # Filter out None results (when an entity could not be found)

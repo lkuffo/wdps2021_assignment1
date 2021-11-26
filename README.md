@@ -22,7 +22,7 @@ To parse this WARC file we first split it into a sequence of lines in which each
 
 For the text extraction part, the main task is to extract the text from the html documents that we obtained from the warc parser stage. In this part, what we mainly do is to filter the HTML tags and leave the text of the html.
 
-To remove the label of the html and leave the text we want, we use BeautifulSoup4 to parse the HTML tree and extract the text content without the HTML tags. Before transmitting the string result to the Entity Recognition Phase, we cleaned the text by removing URLs, Hashtags and special characters (e.g. tabs) from the raw text using regular expressions. 
+To remove the label of the html and leave the text we want, we use BeautifulSoup4 to parse the HTML tree and extract the text content without the HTML tags. Before transmitting the string result to the Entity Recognition Phase, we cleaned the text by removing URLs, Hashtags and special characters (e.g. tabs) from the raw text using regular expressions. For this part, we also tested selectolax and pyQuery but found out that BeautifoulSoup was yielding the best results and provide the most simple way to do the text extraction.
 
 ### 2.3. Entity Recognition
 
