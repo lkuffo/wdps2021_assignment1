@@ -112,12 +112,12 @@ def rank_entities(pool_entity):
             }
 
         # If we have already found entities
-        if len(found_entities) > 0:
+        #if len(found_entities) > 0:
             # Same context assumption search
-            for wikiID_tmp, label_tmp, es_tmp_label in found_entities:
-                # Same context assumption
-                if (label_tmp == original_label):
-                    return [wikiID, original_label, label]
+            # for wikiID_tmp, label_tmp, es_tmp_label in found_entities:
+            #     # Same context assumption
+            #     if (label_tmp == original_label):
+            #         return [wikiID, original_label, label]
 
             # Search for connections with already found entities
             # found_wiki_ids = []
