@@ -92,6 +92,7 @@ def checkIfPerson(wikiID):
 
 # Entities ranking
 def rank_entities(pool_entity):
+    print (pool_entity)
     entityLocalId, entity = pool_entity
     disambiguate_rankings = {}
 
@@ -131,7 +132,7 @@ def rank_entities(pool_entity):
 
     # No candidates
     if (len(disambiguate_rankings) < 1):
-        continue
+        return None
 
     #print ('RANKING RAW', disambiguate_rankings)
 

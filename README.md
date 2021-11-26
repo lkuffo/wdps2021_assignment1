@@ -60,14 +60,20 @@ After having our best ranked entities selected we generate an output file. This 
 
 To run our code, follow these steps:
 
-1. Install the needed dependencies: `pip install -r requirements.txt`
+1. Upgrade pip: `pip3 install --upgrade pip`
 
-2. Run the code: Two alternatives
+2. Install the needed dependencies: `pip3 install -r requirements.txt`
 
-   - You can run the code by running the .sh file which assumes the following paths for input and output respectively:  `data/sample.warc.gz  sample_predictions.tsv`. And for the scoring input and output: `data/sample_annotations.tsv sample_predictions.tsv`
+3. Start elastic search local server `sh es/start_elasticsearch_server.sh`. Wait a few seconds until elastic search is started.
+
+4. Run the code: Two alternatives
+
+   - You can run the code by running the `sh main.sh` file which assumes the following paths for input and output respectively:  `data/sample.warc.gz  sample_predictions.tsv`. And for the scoring input and output: `data/sample_annotations.tsv sample_predictions.tsv`. This will execute the Entity Linker and the `score.py` file to calculate accuracy, recall and f1 score.
 
 
-   - You can also run the code by running `python3 main.py data/sample.warc.gz`. The latter parameter is the input of the WARC file. Then run `python3 score.py data/sample_annotations.tsv sample_predictions.tsv`. The latter parameters are the expected samples and the output file of the *main.py* program respectively.
+   - You can also run the code separately by running `python3 main.py data/sample.warc.gz`. The latter parameter is the input of the WARC file. Then run `python3 score.py data/sample_annotations.tsv sample_predictions.tsv`. The latter parameters are the expected samples and the output file of the *main.py* program respectively. 
+
+5. NOTE: On the first run, the program will download about 800MB of data corresponding to the spaCy models. 
 
 ## 4. Limitations
 
